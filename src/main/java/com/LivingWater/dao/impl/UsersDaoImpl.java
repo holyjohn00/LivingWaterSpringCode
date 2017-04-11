@@ -11,7 +11,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Repository;
 
 import com.LivingWater.dao.UsersDao;
-import com.LivingWater.entities.Users;
+import com.LivingWater.entities.User;
 import com.LivingWater.utility.StringUtility;
 
 @Repository("usersDao")
@@ -22,10 +22,10 @@ public class UsersDaoImpl implements UsersDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Users> getAllUsers() {
+	public List<User> getAllUsers() {
 		EntityManager entityManager = transactionManager.getEntityManagerFactory().createEntityManager();
 		Query sqlQuery = entityManager.createQuery("FROM Users users");
-		List<Users> userList = sqlQuery.getResultList();
+		List<User> userList = sqlQuery.getResultList();
 		if (entityManager.isOpen())
 			entityManager.close();
 
@@ -34,7 +34,7 @@ public class UsersDaoImpl implements UsersDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Users> getUsers(Users searchObject, int startPage, int maxResults) {
+	public List<User> getUsers(User searchObject, int startPage, int maxResults) {
 		EntityManager entityManager = transactionManager.getEntityManagerFactory().createEntityManager();
 		StringBuilder sqlQuerySB = new StringBuilder("FROM Users users");
 		boolean paramExists = false;
@@ -89,7 +89,7 @@ public class UsersDaoImpl implements UsersDao {
 			sqlQuery.setParameter("email", "%" + searchObject.getEmail() + "%");
 		}
 
-		List<Users> userList = sqlQuery.setFirstResult(startPage).setMaxResults(maxResults).getResultList();
+		List<User> userList = sqlQuery.setFirstResult(startPage).setMaxResults(maxResults).getResultList();
 		if (entityManager.isOpen())
 			entityManager.close();
 
@@ -97,7 +97,7 @@ public class UsersDaoImpl implements UsersDao {
 	}
 
 	@Override
-	public void insertUser(Users user) {
+	public void insertUser(User user) {
 		EntityManager entityManager = transactionManager.getEntityManagerFactory().createEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		try {
@@ -114,7 +114,7 @@ public class UsersDaoImpl implements UsersDao {
 	}
 
 	@Override
-	public void updateUser(Users user) {
+	public void updateUser(User user) {
 		EntityManager entityManager = transactionManager.getEntityManagerFactory().createEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		try {
@@ -150,12 +150,12 @@ public class UsersDaoImpl implements UsersDao {
 	}
 
 	@Override
-	public Users getUserByUserId(String strUserId) {
+	public User getUserByUserId(String strUserId) {
 		EntityManager entityManager = transactionManager.getEntityManagerFactory().createEntityManager();
 		StringBuilder sqlQuerySB = new StringBuilder("FROM Users users WHERE users.userid = :userId");
 		Query query = entityManager.createQuery(sqlQuerySB.toString());
 		query.setParameter("userId", strUserId);
-		Users user = (Users) query.getSingleResult();
+		User user = (User) query.getSingleResult();
 		return user;
 	}
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.LivingWater.entities.Users;
+import com.LivingWater.entities.User;
 import com.LivingWater.service.UsersService;
 
 @Controller
@@ -38,7 +38,7 @@ public class UsersController {
 		String strUserId = request.getParameter("userId");
 
 		System.out.print("SULOD SA UPDATE ===  ");
-		Users user = usersService.getUserByUserId(strUserId);
+		User user = usersService.getUserByUserId(strUserId);
 		map.addAttribute("user", user);
 		return "users/update";
 	}
@@ -50,7 +50,7 @@ public class UsersController {
 		String searchFamilyName = request.getParameter("familyName");
 		String searchEmail = request.getParameter("email");
 
-		Users searchObject = new Users();
+		User searchObject = new User();
 		searchObject.setUserid(searchUserId);
 		searchObject.setFirstName(searchFirstName);
 		searchObject.setFamilyName(searchFamilyName);
@@ -58,7 +58,7 @@ public class UsersController {
 
 		int pageSize = (size != null && size != 0) ? size : 25;
 		int firstResultIndex = (page != null && page > 0) ? (page - 1) * pageSize : 0;
-		List<Users> userList = usersService.getUsers(searchObject, firstResultIndex, pageSize);
+		List<User> userList = usersService.getUsers(searchObject, firstResultIndex, pageSize);
 		map.addAttribute("userList", userList);
 		return "users/list";
 	}
@@ -78,7 +78,7 @@ public class UsersController {
 		String searchFamilyName = request.getParameter("familyName");
 		String searchEmail = request.getParameter("email");
 
-		Users insertableUser = new Users();
+		User insertableUser = new User();
 		insertableUser.setUserid(searchUserId);
 		insertableUser.setFirstName(searchFirstName);
 		insertableUser.setFamilyName(searchFamilyName);
@@ -96,7 +96,7 @@ public class UsersController {
 		String searchFamilyName = request.getParameter("familyName");
 		String searchEmail = request.getParameter("email");
 
-		Users updateableUser = new Users();
+		User updateableUser = new User();
 		updateableUser.setUserid(searchUserId);
 		updateableUser.setFirstName(searchFirstName);
 		updateableUser.setFamilyName(searchFamilyName);
